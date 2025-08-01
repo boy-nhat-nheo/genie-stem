@@ -28,8 +28,8 @@ app.register_blueprint(generate_bp, url_prefix='/api/generate')
 
 # Route kiểm tra server
 @app.route('/')
-def index():
-    return render_template('index.html')   # Gọi file trong folder template/
+def test():
+    return render_template('test.html')   # Gọi file trong folder template/
 
 
 if __name__ == '__main__':
