@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Hồ sơ người dùng - STEM Genie</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -25,15 +25,15 @@
           <a href="/trang-chu.html" class="text-gray-500">Trang chủ</a>
           <a href="/cong-dong.html" class="font-bold border-b-4 border-blue-600 pb-1">Cộng đồng</a>
         </div>
-        <div class="text-right">
+        <div class="text-right space-y-1">
           <div class="font-semibold">Nguyễn Mạnh Quân</div>
-          <a href="/ho-so.html" class="text-sm text-blue-600 hover:underline">Hồ sơ cá nhân</a>
+          <a href="/ho-so.html" class="text-sm text-blue-600 hover:underline block">Hồ sơ cá nhân</a>
         </div>
       </div>
 
       <!-- Profile Form -->
       <div class="flex justify-center items-center flex-1 px-6 py-10">
-        <div class="bg-gradient-to-br from-blue-200 to-blue-400 p-10 rounded-2xl shadow-md w-full max-w-5xl">
+        <div class="bg-gradient-to-br from-blue-200 to-blue-400 p-10 rounded-2xl shadow-md w-full max-w-5xl flex flex-col">
           <h2 class="text-2xl font-bold text-center text-white mb-6">HỒ SƠ NGƯỜI DÙNG</h2>
 
           <div class="flex justify-center mb-10">
@@ -45,7 +45,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-6">
+          <div class="grid grid-cols-2 gap-6 mb-10">
             <input type="text" placeholder="Họ và tên" class="px-4 py-3 rounded-lg w-full" />
             <input type="text" placeholder="Số điện thoại" class="px-4 py-3 rounded-lg w-full" />
             <input type="date" placeholder="Ngày sinh" class="px-4 py-3 rounded-lg w-full" />
@@ -54,10 +54,23 @@
             <input type="text" placeholder="Địa chỉ" class="px-4 py-3 rounded-lg w-full" />
           </div>
 
+          <!-- Đăng xuất button -->
+          <div class="mt-auto flex justify-center">
+            <button onclick="logout()" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600">Đăng xuất</button>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+
+  <!-- JavaScript -->
+  <script>
+    function logout() {
+      alert("Bạn đã đi khởi web cute nhất!");
+      window.location.href = "/.html"; // Redirect to main page
+    }
+  </script>
 
 </body>
 </html>
