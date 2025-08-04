@@ -4,13 +4,17 @@ import google.generativeai as genai
 
 generate_bp = Blueprint('generate', __name__)
 
-# --- Model cấu hình ---
+# --- Cấu hình Gemini Model ---
 def get_model():
     api_key = current_app.config.get('GEMINI_API_KEY')
     if not api_key:
         raise ValueError("GEMINI_API_KEY chưa được cấu hình")
     genai.configure(api_key=api_key)
     return genai.GenerativeModel("gemini-1.5-flash-latest")
+
+# --- Hàm chia đoạn văn ---
+def split_paragraphs(text):
+    return [p.strip() for p in text.split("\n\n") if p.strip()]
 
 # --- API tạo dàn ý ---
 @generate_bp.route('/outline', methods=['POST'])
@@ -21,7 +25,8 @@ def generate_outline():
     try:
         model = get_model()
         response = model.generate_content(f"Hãy tạo dàn ý cho bài giảng: {text}")
-        return jsonify({"input": text, "result": response.text})
+        paragraphs = split_paragraphs(response.text)
+        return jsonify({"input": text, "result": paragraphs})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -34,7 +39,8 @@ def generate_lesson():
     try:
         model = get_model()
         response = model.generate_content(f"Hãy viết giáo án chi tiết cho: {text}")
-        return jsonify({"input": text, "result": response.text})
+        paragraphs = split_paragraphs(response.text)
+        return jsonify({"input": text, "result": paragraphs})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -47,7 +53,8 @@ def generate_slides():
     try:
         model = get_model()
         response = model.generate_content(f"Hãy tạo slide trình bày cho bài giảng sau: {text}")
-        return jsonify({"input": text, "result": response.text})
+        paragraphs = split_paragraphs(response.text)
+        return jsonify({"input": text, "result": paragraphs})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -60,11 +67,12 @@ def generate_summarize():
     try:
         model = get_model()
         response = model.generate_content(f"Hãy tóm tắt nội dung sau: {text}")
-        return jsonify({"input": text, "result": response.text})
+        paragraphs = split_paragraphs(response.text)
+        return jsonify({"input": text, "result": paragraphs})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# --- API chat từng câu (giống ChatGPT) ---
+# --- API chat đơn câu ---
 @generate_bp.route('/chat/message', methods=['POST'])
 @jwt_required()
 def chat_message():
@@ -75,11 +83,12 @@ def chat_message():
     try:
         model = get_model()
         response = model.generate_content(message)
-        return jsonify({"reply": response.text})
+        paragraphs = split_paragraphs(response.text)
+        return jsonify({"reply": paragraphs})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# --- API chat theo luồng: tạo giáo án từ hội thoại ---
+# --- API chat theo luồng ---
 @generate_bp.route('/chat/flow', methods=['POST'])
 def chat_flow():
     data = request.json
@@ -90,13 +99,13 @@ def chat_flow():
         model = get_model()
 
         if state == "ask_topic":
-            reply = "Chào thầy/cô! Hôm nay bạn muốn dạy chủ đề gì?"
+            reply = ["Chào thầy/cô! Hôm nay bạn muốn dạy chủ đề gì?"]
             next_state = "wait_topic"
 
         elif state == "wait_topic":
             response = model.generate_content(f"Hãy tạo dàn ý bài giảng cho chủ đề: {user_message}")
             outline = response.text
-            reply = f"Đây là dàn ý gợi ý:\n{outline}\n\nBạn thấy ổn chưa? (Nhập 'Tiếp tục' để tạo giáo án hoặc chỉnh sửa nếu cần)"
+            reply = split_paragraphs(f"Đây là dàn ý gợi ý:\n{outline}\n\nBạn thấy ổn chưa? (Nhập 'Tiếp tục' để tạo giáo án hoặc chỉnh sửa nếu cần)")
             next_state = "confirm_outline"
             data_to_pass = {"outline": outline}
 
@@ -105,18 +114,18 @@ def chat_flow():
                 outline = data.get("outline", "")
                 response = model.generate_content(f"Hãy viết giáo án chi tiết từ dàn ý sau:\n{outline}")
                 lesson = response.text
-                reply = f"Đây là giáo án chi tiết:\n{lesson}\n\nBạn muốn tạo slide không?"
+                reply = split_paragraphs(f"Đây là giáo án chi tiết:\n{lesson}\n\nBạn muốn tạo slide không?")
                 next_state = "confirm_lesson"
                 data_to_pass = {"lesson": lesson}
             else:
-                reply = "Bạn muốn chỉnh sửa dàn ý thế nào? Hãy nhập nội dung sửa."
+                reply = ["Bạn muốn chỉnh sửa dàn ý thế nào? Hãy nhập nội dung sửa."]
                 next_state = "edit_outline"
 
         elif state == "edit_outline":
             new_outline = user_message
             response = model.generate_content(f"Hãy viết giáo án chi tiết từ dàn ý sau:\n{new_outline}")
             lesson = response.text
-            reply = f"Đây là giáo án mới dựa trên dàn ý đã sửa:\n{lesson}\n\nBạn muốn tạo slide không?"
+            reply = split_paragraphs(f"Đây là giáo án mới dựa trên dàn ý đã sửa:\n{lesson}\n\nBạn muốn tạo slide không?")
             next_state = "confirm_lesson"
             data_to_pass = {"lesson": lesson}
 
@@ -125,14 +134,14 @@ def chat_flow():
                 lesson = data.get("lesson", "")
                 response = model.generate_content(f"Hãy tạo slide trình bày cho bài giảng sau:\n{lesson}")
                 slides = response.text
-                reply = f"Dưới đây là slide trình bày:\n{slides}\n\nHoàn tất quá trình rồi nhé!"
+                reply = split_paragraphs(f"Dưới đây là slide trình bày:\n{slides}\n\nHoàn tất quá trình rồi nhé!")
                 next_state = "done"
             else:
-                reply = "Đã dừng tại bước giáo án. Bạn có thể yêu cầu tạo slide sau."
+                reply = ["Đã dừng tại bước giáo án. Bạn có thể yêu cầu tạo slide sau."]
                 next_state = "done"
 
         else:
-            reply = "Kết thúc hội thoại. Nếu muốn bắt đầu lại, hãy nhập 'bắt đầu'."
+            reply = ["Kết thúc hội thoại. Nếu muốn bắt đầu lại, hãy nhập 'bắt đầu'."]
             next_state = "ask_topic"
 
         return jsonify({

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STEM Genie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3F6FA] font-sans text-gray-800">
+
+  <!-- Thanh trên cùng -->
+  <header class="bg-white shadow flex items-center px-8 py-3">
+    <!-- Logo trái -->
+    <div class="flex items-center space-x-3">
+      <img src="https://i.postimg.cc/CxxcQ6cZ/logo.png" alt="Logo" class="w-10 h-10"/>
+      <span class="text-xl font-semibold text-[#1D4ED8]">STEM Genie</span>
+    </div>
+
+    <!-- Menu giữa -->
+    <nav class="flex-1 flex justify-center items-center space-x-6">
+      <a href="#" class="text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 px-4 py-2 rounded-full">Trang chủ</a>
+      <a href="#" class="text-sm text-gray-600 hover:text-blue-600">Cộng đồng</a>
+    </nav>
+
+    <!-- Đăng nhập phải -->
+    <div class="flex items-center space-x-3">
+      <a href="man-hinh-cho.html" class="text-sm text-white bg-blue-700 px-4 py-2 rounded-full">Đăng nhập</a>
+      <a href="dang-ky.html" class="text-sm border border-blue-700 text-blue-700 px-4 py-2 rounded-full">Đăng ký</a>
+    </div>
+  </header>
+
+  <!-- Giao diện chính -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar trái -->
+    <aside class="w-64 bg-gradient-to-b from-blue-400 to-blue-600 text-white p-4 flex flex-col justify-between">
+      <div class="space-y-4">
+        <div class="text-lg font-bold mb-6"> 
+          <div class="flex items-center space-x-2">
+            <div class="bg-white p-2 rounded-full">
+              <img src="https://i.postimg.cc/CxxcQ6cZ/logo.png" class="w-8 h-8" />
+            </div>
+            <span>STEM Genie</span>
+          </div>
+        </div>
+
+        <button class="flex items-center w-full space-x-2 bg-blue-700 px-4 py-2 rounded-full hover:bg-blue-800">
+          <span>🏠</span><span>Trang chủ</span>
+        </button>
+        <button class="flex items-center w-full space-x-2 bg-blue-700 px-4 py-2 rounded-full hover:bg-blue-800">
+          <span>👥</span><span>Cộng đồng</span>
+        </button>
+      </div>
+
+      <!-- Tiện ích: hàng ngang -->
+      <div class="flex justify-center space-x-4 mb-4">
+        <button class="w-10 h-10 rounded-full bg-white text-gray-700 flex items-center justify-center text-xl shadow hover:bg-gray-100" title="Cài đặt">⚙️</button>
+        <button class="w-10 h-10 rounded-full bg-white text-gray-700 flex items-center justify-center text-xl shadow hover:bg-gray-100" title="Gửi mail">📧</button>
+        <button class="w-10 h-10 rounded-full bg-white text-gray-700 flex items-center justify-center text-xl shadow hover:bg-gray-100" title="Cuộc gọi">📞</button>
+      </div>
+    </aside>
+
+    <!-- Nội dung chính -->
+    <main class="flex-1 p-6">
+      <!-- Giới thiệu -->
+      <section class="bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-2xl p-6 shadow mb-6 text-center">
+        <div class="flex justify-center mb-4">
+          <img src="https://i.postimg.cc/T2NB9kGb/book-logo.png" class="w-12 h-12" alt="book logo"/>
+        </div>
+        <h1 class="text-3xl font-bold mb-2">STEM Genie</h1>
+        <p class="text-lg max-w-2xl mx-auto">
+          Trợ lý AI giúp giáo viên tạo giáo án & slide STEM siêu tốc, đồng thời kết nối bạn với cộng đồng tài nguyên chia sẻ để nâng tầm mọi bài giảng.
+        </p>
+      </section>
+
+      <!-- Tính năng nổi bật -->
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-center">
+          <span class="inline-block bg-blue-700 text-white px-6 py-2 rounded-full shadow">
+            Tính năng nổi bật
+          </span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="bg-white rounded-2xl p-6 shadow">
+            <div class="text-4xl text-blue-500 mb-2">⭐</div>
+            <h3 class="text-lg font-bold mb-2 text-blue-800">Thư viện tài liệu</h3>
+            <p class="text-sm text-gray-600">Kho tài nguyên chuẩn theo chương trình, liên tục cập nhật giáo án, bài giảng và hoạt động STEM cho mọi cấp học.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow">
+            <div class="text-4xl text-blue-500 mb-2">⭐</div>
+            <h3 class="text-lg font-bold mb-2 text-blue-800">Tạo bài giảng AI</h3>
+            <p class="text-sm text-gray-600">Công cụ hỗ trợ giáo viên thiết kế slide và giáo án STEM nhanh chóng, chính xác theo nhu cầu giảng dạy thực tế.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow">
+            <div class="text-4xl text-blue-500 mb-2">⭐</div>
+            <h3 class="text-lg font-bold mb-2 text-blue-800">Cộng đồng giáo viên</h3>
+            <p class="text-sm text-gray-600">Nơi chia sẻ, kết nối và học hỏi giữa các giáo viên cùng quan tâm đến phương pháp giáo dục STEM.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+</body>
+</html>

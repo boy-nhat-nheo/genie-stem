@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>STEM Genie - Đăng ký</title>
   <style>
     body {
@@ -49,7 +49,8 @@
       margin-bottom: 15px;
     }
 
-    .form-row input {
+    .form-row input,
+    .form-row select {
       flex: 1;
       padding: 10px;
       border-radius: 8px;
@@ -75,7 +76,7 @@
       background-color: #155ab3;
     }
 
-     .floating-widget {
+    .floating-widget {
       position: fixed;
       bottom: 20px;
       left: 20px;
@@ -100,34 +101,67 @@
   </style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/CxxcQ6cZ/logo.png" alt="STEM Genie Logo" class="logo-img">
+  <img src="https://i.postimg.cc/CxxcQ6cZ/logo.png" alt="STEM Genie Logo" class="logo-img" />
   <div class="logo-text">STEM GENIE</div>
 
   <div class="register-container">
     <h2>Đăng ký</h2>
-    <div class="form-row">
-      <input type="text" placeholder="Họ và tên">
-      <input type="email" placeholder="Gmail">
-    </div>
-    <div class="form-row">
-      <input type="text" placeholder="Giới tính">
-      <input type="text" placeholder="Số điện thoại">
-    </div>
-    <div class="form-row">
-      <input type="date" placeholder="Ngày sinh">
-      <input type="password" placeholder="Mật khẩu">
-    </div>
-    <div class="form-row">
-      <input type="text" placeholder="Địa chỉ">
-      <input type="password" placeholder="Xác nhận lại mật khẩu">
-    </div>
-    <button  class="submit-btn">Đăng ký tài khoản</button>
+    <form id="registerForm">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Họ và tên" required />
+        <input type="email" name="email" placeholder="Gmail" required />
+      </div>
+      <div class="form-row">
+        <select name="gender" required>
+          <option value="">-- Giới tính --</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+          <option value="Khác">Khác</option>
+        </select>
+        <input type="text" name="phone" placeholder="Số điện thoại" />
+      </div>
+      <div class="form-row">
+        <input type="date" name="dob" placeholder="Ngày sinh" />
+        <input type="password" name="password" placeholder="Mật khẩu" required />
+      </div>
+      <div class="form-row">
+        <input type="text" name="address" placeholder="Địa chỉ" />
+        <input type="password" name="confirm_password" placeholder="Xác nhận lại mật khẩu" required />
+      </div>
+      <button type="submit" class="submit-btn">Đăng ký tài khoản</button>
+    </form>
   </div>
+
+  <div class="floating-widget" onclick="widgetClicked()">?</div>
+
   <script>
-     function widgetClicked() {
+    function widgetClicked() {
       alert("Bạn cần giúp đỡ ư cảm ơn tôi không giúp được?");
     }
+
+    // Xử lý sự kiện đăng ký
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const password = formData.get("password");
+      const confirm = formData.get("confirm_password");
+
+      if (password !== confirm) {
+        alert("Mật khẩu không khớp!");
+        return;
+      }
+
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      console.log("Dữ liệu đăng ký:", data);
+
+      // Chuyển sang màn hình chính (giả định bạn có file main.html)
+      window.location.href = "trang-chu.html";
+    });
   </script>
-    
 </body>
 </html>

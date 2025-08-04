@@ -29,8 +29,9 @@ app.register_blueprint(generate_bp, url_prefix='/api/generate')
 # Route kiểm tra server
 @app.route('/')
 def test():
-    return render_template('test.html')   # Gọi file trong folder template/
+    return render_template('/lua-chon.html')   # Gọi file trong folder template/
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
